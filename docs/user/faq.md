@@ -1,13 +1,15 @@
 # Frequently Asked Questions
 
-From an outsiders view, some design choices, requirements, and testing procedures can seem arbitrary. The following list of FAQ is intended to help provide context and better guide users and contributors of ntc-templates.
+From an outsider's view, some design choices, requirements, and testing procedures can seem arbitrary. The following list of FAQ is intended to help provide context and better guide users and contributors of ntc-templates.
 
 ## How do I test my templates?
 
 You can follow the local development procedures, but for your convenience here are included locations to test your template:
 
 * [textfsm.nornir.tech](https://textfsm.nornir.tech/) - An online textfsm editor.
-* [Itential](https://template.itential.io/) - An online textfsm editor by Itential.
+* [Packet Coders TextFSM Parser](https://tools.packetcoders.io/textfsm-parser/) - An online textfsm editor by Packet Coders.
+* [Slurp'it TextFSM Template Builder](https://textfsm.slurpit.io/) - An online AI-integrated textfsm editor by Slurp'it.
+    * [Overview page](https://slurpit.io/textfsm-template-builder/) which links to [code on GitLab](https://gitlab.com/slurpit.io/template_builder) for a self-hosted version.
 
 ## Why is there a requirement to use `Error` in every template?
 

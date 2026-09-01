@@ -1,11 +1,11 @@
 """Ensure that testcases exist for all templates."""
+
 import os
 import glob
 import re
 import pytest
 
 from tests import load_index_data
-
 
 TEST_DIRECTORIES = os.listdir("tests")
 

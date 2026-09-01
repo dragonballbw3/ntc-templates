@@ -1,4 +1,4 @@
-Value Filldown PROTOCOL (C|S|R|B|D|O|i|L)
+Value Filldown PROTOCOL (C|S|R|B|D|O|i|L|V)
 Value Filldown TYPE (\w{0,2})
 Value Required,Filldown NETWORK (\d+\.\d+\.\d+\.\d+|\S+)
 Value Filldown NETMASK (\d+\.\d+\.\d+\.\d+)
@@ -9,7 +9,12 @@ Value NEXTHOPIF (\S+)
 Value UPTIME (\d\S+?)
 
 Start
+  # Skips over the code line that explains what each code means
+  ^Codes:
+  # Skips over the definitions for the codes
+  ^\s{6,}\S*\s-\s\S.*
   ^Gateway -> ROUTES
+  ^. -> Error
 
 ROUTES
   # Match regular routes with all data in same line
@@ -28,11 +33,20 @@ ROUTES
   # Match directly connected routes
   ^${PROTOCOL}\s${TYPE}\s+${NETWORK}\sis\sdirectly\sconnected,\s${NEXTHOPIF} -> Record
   ^${PROTOCOL}(\*){0,1}\s${TYPE}\s+${NETWORK}\s+${NETMASK}\sis\sdirectly\sconnected,\s${NEXTHOPIF} -> Record
+  ^\s+is\sdirectly\sconnected,\s${NEXTHOPIF} -> Record
+  #
+  # Match VPN routes
+  ^${PROTOCOL}\s+${TYPE}\s+${NETWORK}\s+${NETMASK}\s+connected\s+by\s+VPN\s+\(advertised\),\s+${NEXTHOPIF}\s*$$ -> Record
+  #
+  # Match multiline VPN routes
+  ^${PROTOCOL}\s+${TYPE}\s+${NETWORK}\s+${NETMASK}\s*$$ -> Continue
+  ^\s+connected\s+by\s+VPN\s+\(advertised\),\s+${NEXTHOPIF}\s*$$ -> Record
   #
   # Clear all variables on empty lines
-  ^\s* -> Clearall
+  ^\s*$$ -> Clearall
   #^${TYPE} -> Continue.Record
   #^${TYPE}\s+${NETWORK}\s+${NETMASK}\s+\[\d+\/\d+\]\s+via\s+${GATEWAY}\,\s+${UPTIME},\s+${INTFC}\s*$$ -> Record
   #^\s+\[\d+\/\d+\]\s+via\s+${GATEWAY}\,\s+${UPTIME},\s+${INTFC}\s*$$ -> Record
+  ^. -> Error
 
 EOF

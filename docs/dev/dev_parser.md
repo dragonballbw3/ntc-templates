@@ -42,6 +42,12 @@ Start
   ^${TIME}\s+${TIMEZONE}\s+${DAYWEEK}\s+${DAY}/${MONTH}/${YEAR} -> Record
   ^. -> Error
 ```
+
+!!! tip
+    Use [standard capture group names](https://github.com/networktocode/ntc-templates/blob/master/docs/dev/data_model.md) where possible to achieve a level of normalization.
+
+    If templates you are creating or editing have capture groups that might be in common with others, please check other templates for similar capture groups as there might already be one in use. If you have a suggestion for a standard capture group name, suggest the change(s) to Network to Code for discussion and consideration.
+
 ### States
 
 If the raw output has a heading, the `Start` state should match on the column headings and then transition to another state that will match the device's output table with the capture groups. This helps ensure the regex patterns for the capture groups are attempting to match the correct information, and allows templates to easily add additional States for tables that have different headings. 
@@ -221,7 +227,7 @@ tests/cisco_ios/show_mac-address-table/cisco_ios_show_mac-address-table9.yml
 $ 
 ```
 
-Additionally, each of these commands are available via invoke commands to better support a docker environment. The arguement names match up, e.g. `python cli.py clean-yaml-file` has an equivalant `invoke clean-yaml-file`.
+Additionally, each of these commands are available via invoke commands to better support a docker environment. The argument names match up, e.g. `python cli.py clean-yaml-file` has an equivalant `invoke clean-yaml-file`.
 
 # Updating/Fixing Existing Templates
 When either fixing a bug within a template or adding additional **Values** to be captured, additional test files should be added to ensure backwards compatibility and that the new data is being parsed correctly.
